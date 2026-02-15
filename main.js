@@ -1,38 +1,27 @@
-console.log("🔥 MAIN JS LOADED 🔥");
+console.log("MAIN ENGINE START 🚀");
 
-// auth functions import
 import { connectGoogleLogin, detectUser } from "/auth.js";
 
 
-// ===============================
-// 🔥 CONNECT GOOGLE LOGIN BUTTON
-// ===============================
-connectGoogleLogin("loginBtn");        // login test page
-connectGoogleLogin("googleLoginBtn");  // homepage mini G button
+// Connect login button (agar page me hai)
+connectGoogleLogin("loginBtn");
+connectGoogleLogin("googleLoginBtn");
 
 
-
-// ===============================
-// 🔥 DETECT LOGIN STATE
-// ===============================
+// Detect login and redirect
 detectUser((user) => {
 
   if (!user) {
-    console.log("User not logged in");
+    console.log("No user session");
     return;
   }
 
-  console.log("User session active:", user.email);
+  console.log("User logged in:", user.email);
 
-  // agar user index page par hai → ideology bhej do
   const path = window.location.pathname;
 
-  if (
-    path === "/" ||
-    path.includes("index") ||
-    path.includes("login")
-  ) {
-    console.log("Redirecting to ideology page...");
+  // Login page → ideology
+  if (path === "/" || path.includes("login") || path.includes("index")) {
     window.location.href = "/ideology.html";
   }
 
