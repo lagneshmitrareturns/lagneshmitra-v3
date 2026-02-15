@@ -4,16 +4,14 @@
   <title>Login Test</title>
 </head>
 
-<body style="text-align:center;margin-top:100px;font-family:Arial">
+<body style="text-align:center;margin-top:100px">
 
   <h1>Google Login Test</h1>
 
   <button id="loginBtn">Login with Google</button>
 
-  <p id="userName" style="margin-top:20px;color:green;"></p>
-
-  <!-- IMPORTANT: auth.js nahi, MAIN.JS load hoga -->
-  <script type="module" src="/main.js"></script>
+  <!-- ⭐ IMPORTANT FIX: ./ not / -->
+  <script type="module" src="./auth.js"></script>
 
 </body>
 </html>
