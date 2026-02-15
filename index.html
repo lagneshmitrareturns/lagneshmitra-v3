@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Test</title>
+  <title>JS Load Test</title>
 </head>
 
 <body style="text-align:center;margin-top:100px">
 
-  <h1>Google Login Test</h1>
+<h1>JS Load Test</h1>
 
-  <button id="loginBtn">Login with Google</button>
+<button id="loginBtn">Click me</button>
 
-  <!-- ⭐ IMPORTANT FIX: ./ not / -->
-  <script type="module" src="./auth.js"></script>
+<script type="module">
+  alert("JS MODULE LOADED SUCCESSFULLY 🔥");
+
+  const btn = document.getElementById("loginBtn");
+  btn.onclick = () => alert("BUTTON WORKING 🔥");
+</script>
 
 </body>
 </html>
