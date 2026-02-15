@@ -1,5 +1,3 @@
-console.log("AUTH ENGINE STARTED 🚀");
-
 import { auth } from "./firebase-config.js";
 
 import {
@@ -10,34 +8,30 @@ import {
 
 const provider = new GoogleAuthProvider();
 
-const btn = document.getElementById("loginBtn");
+const loginBtn = document.getElementById("loginBtn");
+const app = document.getElementById("app");
+const loading = document.getElementById("loading");
 
 
-// ================= LOGIN BUTTON =================
-if (btn) {
-  btn.addEventListener("click", async () => {
-    console.log("Opening Google login...");
+// 🔥 LOGIN BUTTON
+if (loginBtn) {
+  loginBtn.onclick = async () => {
     await signInWithPopup(auth, provider);
-  });
+  };
 }
 
 
-// ================= AUTO SESSION DETECTOR =================
+// ⭐ MAIN MAGIC — WAIT FOR FIREBASE FIRST
 onAuthStateChanged(auth, (user) => {
 
-  const path = window.location.pathname;
+  loading.style.display = "none";
 
-  // USER NOT LOGGED IN
-  if (!user) {
-    console.log("No user session");
+  // USER ALREADY LOGGED IN → GO IDEOLOGY
+  if (user) {
+    window.location.replace("/ideology.html");
     return;
   }
 
-  console.log("Session found:", user.email);
-
-  // ⭐ If user already logged in → skip login page
-  if (path === "/" || path.includes("index")) {
-    window.location.replace("/ideology.html");
-  }
-
+  // USER NOT LOGGED IN → SHOW LOGIN PAGE
+  app.style.display = "block";
 });
