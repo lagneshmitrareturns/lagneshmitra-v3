@@ -12,6 +12,7 @@ const provider = new GoogleAuthProvider();
 
 const btn = document.getElementById("loginBtn");
 
+
 // ================= LOGIN BUTTON =================
 if (btn) {
   btn.addEventListener("click", async () => {
@@ -20,19 +21,23 @@ if (btn) {
   });
 }
 
-// ================= LOGIN DETECTOR =================
+
+// ================= AUTO SESSION DETECTOR =================
 onAuthStateChanged(auth, (user) => {
 
+  const path = window.location.pathname;
+
+  // USER NOT LOGGED IN
   if (!user) {
-    console.log("User not logged in");
+    console.log("No user session");
     return;
   }
 
-  console.log("Login success:", user.email);
+  console.log("Session found:", user.email);
 
-  // ⭐ REDIRECT AFTER LOGIN
-  if (window.location.pathname.includes("index") || window.location.pathname === "/") {
-    window.location.href = "/ideology.html";
+  // ⭐ If user already logged in → skip login page
+  if (path === "/" || path.includes("index")) {
+    window.location.replace("/ideology.html");
   }
 
 });
