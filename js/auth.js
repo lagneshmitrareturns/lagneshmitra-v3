@@ -1,5 +1,3 @@
-console.log("AUTH JS LOADED 🔥");
-
 import { auth } from "/firebase-config.js";
 
 import {
@@ -17,50 +15,34 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
 
-// ============================
-// LOGIN BUTTON
-// ============================
-window.addEventListener("DOMContentLoaded", async () => {
+// 🔥 BUTTON CONNECT FUNCTION (export)
+export function connectGoogleLogin(btnId) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
 
-  const btn = document.getElementById("loginBtn");
+  btn.onclick = () => {
+    console.log("Redirecting to Google...");
+    signInWithRedirect(auth, provider);
+  };
+}
 
-  if (btn) {
-    btn.onclick = () => {
-      console.log("Redirecting to Google...");
-      signInWithRedirect(auth, provider);
-    };
-  }
 
-  // ⭐⭐ THIS WAS MISSING ⭐⭐
-  // Detect redirect login result
+// 🔥 LOGIN DETECTOR FUNCTION (export)
+export async function detectUser(callback) {
+
+  // 1️⃣ After redirect login
   try {
     const result = await getRedirectResult(auth);
-
     if (result?.user) {
-      alert("LOGIN SUCCESS 🔥");
-      window.location.href = "/ideology.html";
+      callback(result.user);
       return;
     }
-  } catch (err) {
-    console.log("Redirect error:", err);
-  }
-});
-
-
-// ============================
-// SESSION RESTORE (refresh case)
-// ============================
-onAuthStateChanged(auth, (user) => {
-
-  if (!user) {
-    console.log("Not logged in");
-    return;
+  } catch (e) {
+    console.log(e);
   }
 
-  console.log("Session restored:", user.email);
-
-  if (window.location.pathname === "/" || window.location.pathname.includes("index")) {
-    window.location.href = "/ideology.html";
-  }
-
-});
+  // 2️⃣ Session restore
+  onAuthStateChanged(auth, (user) => {
+    if (user) callback(user);
+  });
+}
