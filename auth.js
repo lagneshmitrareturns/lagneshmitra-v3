@@ -1,6 +1,7 @@
-console.log("AUTH ENGINE LOADED 🔥");
+console.log("AUTH MODULE READY 🔥");
 
 import { auth } from "/firebase-config.js";
+
 import {
   GoogleAuthProvider,
   signInWithRedirect,
@@ -14,22 +15,24 @@ await setPersistence(auth, browserLocalPersistence);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-export function connectGoogleLogin(buttonId) {
-  window.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById(buttonId);
-    if (!btn) return;
 
-    btn.onclick = () => {
-      console.log("Redirecting to Google...");
-      signInWithRedirect(auth, provider);
-    };
-  });
+// ===== GOOGLE LOGIN CONNECT =====
+export function connectGoogleLogin(buttonId) {
+  const btn = document.getElementById(buttonId);
+  if (!btn) return;
+
+  console.log("Login button connected");
+
+  btn.onclick = () => {
+    console.log("Redirecting to Google...");
+    signInWithRedirect(auth, provider);
+  };
 }
 
+
+// ===== USER DETECTOR =====
 export function detectUser(callback) {
   onAuthStateChanged(auth, (user) => {
-    if (!user) return;
-    console.log("User logged in:", user.email);
     callback(user);
   });
 }
