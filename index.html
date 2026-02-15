@@ -4,16 +4,17 @@
   <title>LagneshMitra Login</title>
 </head>
 
-<body style="text-align:center;margin-top:120px;font-family:sans-serif">
+<body style="text-align:center;margin-top:100px">
 
+<div id="app" style="display:none">
   <h1>Welcome</h1>
   <p>Login to enter Ideology Page</p>
+  <button id="loginBtn">Login with Google</button>
+</div>
 
-  <button id="loginBtn" style="padding:16px 28px;font-size:18px;">
-    Login with Google
-  </button>
+<h3 id="loading">Checking session...</h3>
 
-  <script type="module" src="./auth.js"></script>
+<script type="module" src="/auth.js"></script>
 
 </body>
 </html>
