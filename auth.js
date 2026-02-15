@@ -1,42 +1,52 @@
-console.log("AUTH ENGINE LOADED");
+console.log("AUTH JS LOADED 🔥");
 
-import { auth } from "./firebase-config.js";
+import { auth } from "/firebase-config.js";
 
 import {
   GoogleAuthProvider,
   signInWithRedirect,
   onAuthStateChanged,
   setPersistence,
-  browserLocalPersistence,
-  signOut
+  browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-// persist login
+// persistence (mobile must)
 await setPersistence(auth, browserLocalPersistence);
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-// LOGIN BUTTON CONNECTOR
-export function connectGoogleLogin(buttonId){
-  const btn = document.getElementById(buttonId);
-  if (!btn) return;
 
-  btn.onclick = () => {
-    console.log("Redirecting to Google...");
-    signInWithRedirect(auth, provider);
-  };
-}
+// 🔥 LOGIN BUTTON CONNECT
+window.addEventListener("DOMContentLoaded", () => {
 
-// SESSION DETECTOR
-export function detectUser(callback){
-  onAuthStateChanged(auth, (user)=>{
-    callback(user);
-  });
-}
+  const btn = document.getElementById("loginBtn");
 
-// LOGOUT
-export async function logout(){
-  await signOut(auth);
-  location.reload();
-}
+  if (btn) {
+    console.log("Login button found");
+
+    btn.onclick = () => {
+      console.log("Redirecting to Google...");
+      signInWithRedirect(auth, provider);
+    };
+  }
+
+});
+
+
+// 🔥 LOGIN DETECTOR (MAIN MAGIC)
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    console.log("Not logged in");
+    return;
+  }
+
+  console.log("User logged in:", user.email);
+
+  // redirect AFTER login
+  if (window.location.pathname === "/" || window.location.pathname.includes("index")) {
+    window.location.href = "/ideology.html";
+  }
+
+});
