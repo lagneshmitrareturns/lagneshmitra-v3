@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JS Load Test</title>
+  <title>Login Test</title>
 </head>
 
 <body style="text-align:center;margin-top:100px">
 
-<h1>JS Load Test</h1>
-
-<button id="loginBtn">Click me</button>
+<h1>Google Login Test</h1>
+<button id="loginBtn">Login with Google</button>
 
 <script type="module">
-  alert("JS MODULE LOADED SUCCESSFULLY 🔥");
+  import { connectGoogleLogin, detectUser } from "./js/auth.js";
 
-  const btn = document.getElementById("loginBtn");
-  btn.onclick = () => alert("BUTTON WORKING 🔥");
+  connectGoogleLogin("loginBtn");
+
+  detectUser((user)=>{
+    if(!user) return;
+
+    alert("LOGIN SUCCESS 🔥 " + user.email);
+    window.location.href = "/ideology.html";
+  });
 </script>
 
 </body>
