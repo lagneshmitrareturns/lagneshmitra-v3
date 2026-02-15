@@ -3,24 +3,13 @@
 <head>
   <title>Login Test</title>
 </head>
-
 <body style="text-align:center;margin-top:100px">
 
 <h1>Google Login Test</h1>
+
 <button id="loginBtn">Login with Google</button>
 
-<script type="module">
-  import { connectGoogleLogin, detectUser } from "./js/auth.js";
-
-  connectGoogleLogin("loginBtn");
-
-  detectUser((user)=>{
-    if(!user) return;
-
-    alert("LOGIN SUCCESS 🔥 " + user.email);
-    window.location.href = "/ideology.html";
-  });
-</script>
+<script type="module" src="/main.js"></script>
 
 </body>
 </html>
